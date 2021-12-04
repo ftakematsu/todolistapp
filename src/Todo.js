@@ -15,7 +15,7 @@ function Todo({item, checkTodo, setSelectedId}) {
       user_id: item.user_id,
       name: item.name,
       status: (item.status==0) ? 1 : 0,
-      due_to: ""
+      due_to: item.due_to
     });
 
   }
@@ -75,6 +75,11 @@ function Todo({item, checkTodo, setSelectedId}) {
     alert(item._id);
   }
 
+  const formatData = (data) => {
+    if (data=="") return "";
+    var dataform  = new Date(data);
+    return (dataform.toLocaleDateString("pt-BR"));
+  }
 
   // Se estiver visível, retornar vazio
   if (isVisible === false) {
@@ -96,7 +101,9 @@ function Todo({item, checkTodo, setSelectedId}) {
       containerStyle={{overflow: 'hidden'}}
     >
         <View style={styles.item} >
-          <Text style={isChecked ? styles.complete : styles.incomplete}>{item.name}</Text>
+        <Text style={isChecked ? styles.complete : styles.incomplete}>{item.name}</Text>
+
+        <Text>{formatData(item.due_to)}</Text>
           
           <TouchableOpacity onLongPress={handleLongPress}>
             <Text>Visualizar</Text>

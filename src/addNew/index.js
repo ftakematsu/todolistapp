@@ -11,7 +11,7 @@ export default class AddNew extends Component {
   const [totalItens, setTotalItens] = React.useState(0);
   const [textAtual, setTextAtual] = React.useState("");
   const [userId, setUserId] = React.useState("");*/
-    
+
   constructor() {
       super();
       this.getData();
@@ -21,7 +21,8 @@ export default class AddNew extends Component {
       myTodoList: null,
       totalItens: 0,
       textAtual: "",
-      userId: ""
+      userId: "",
+      date: new Date()
   };
 
   buscarTodos = async () => {
@@ -31,14 +32,14 @@ export default class AddNew extends Component {
     this.setState({ myTodoList: response.data });  
   }
 
-  inserirTodo = async (text) => {
+  inserirTodo = async (text, dueTo=new Date()) => {
     //alert(text);
     let myId = this.state.userId;
     const response = await api.post('/todo', {
         user_id: myId,
         name: text,
         status: 0,
-        due_to: ''
+        due_to: dueTo
     }).then((response) => {
         this.buscarTodos();
     }, (error) => {
@@ -46,8 +47,8 @@ export default class AddNew extends Component {
     });
   }
 
-  addMyTodo = (text) => {
-    this.inserirTodo(text);
+  addMyTodo = (text, dueTo=new Date()) => {
+    this.inserirTodo(text, dueTo);
   }
   
   /**

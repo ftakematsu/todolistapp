@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackActions, NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
 
+
 export default class Main extends Component {
   /*const [myTodoList, setMyTodoList] = React.useState(null);
   const [totalItens, setTotalItens] = React.useState(0);

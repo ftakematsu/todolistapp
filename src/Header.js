@@ -1,12 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import TodoInputText from "./TodoInputText.js";
+import DatePicker from 'react-native-date-picker';
+
 
 function Header({title, addTodo}) {
+  const [date, setDate] = React.useState(new Date());
 
   const handleSave = (text) => {
     if (text.lenght!==0) {
-      addTodo(text);
+      addTodo(text, date);
     }
   }
 
@@ -18,6 +21,8 @@ function Header({title, addTodo}) {
         placeholder="O que você quer fazer?"
         onSave={handleSave}
       />
+
+      <DatePicker date={date} onDateChange={setDate} />
       
     </View>
   );
