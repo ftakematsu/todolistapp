@@ -2,6 +2,7 @@ import React, {useRef} from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { CheckBox } from 'react-native-elements';
+import api from './services/api';
 
 function Todo({item, checkTodo, setSelectedId}) {
 
@@ -9,12 +10,20 @@ function Todo({item, checkTodo, setSelectedId}) {
   const [isChecked, setIsChecked] = React.useState(item.status);
 
   const alterarStatusItemApi = async () => {
-    //alert(item._id);
+    setIsChecked(!isChecked);
+    const response = await api.put('/todo/' + item._id, {
+      user_id: item.user_id,
+      name: item.name,
+      status: (item.status==0) ? 1 : 0,
+      due_to: ""
+    });
+
   }
 
   const removerItemApi = async () => {
     //alert(item._id);
     setIsVisible(!isVisible);
+    const response = await api.delete('/todo/' + item._id);
   }
 
   const handleCheck = () => {
@@ -62,6 +71,10 @@ function Todo({item, checkTodo, setSelectedId}) {
     }
   }
 
+  const handleLongPress = () => {
+    alert(item._id);
+  }
+
 
   // Se estiver visível, retornar vazio
   if (isVisible === false) {
@@ -82,8 +95,13 @@ function Todo({item, checkTodo, setSelectedId}) {
       friction={1}
       containerStyle={{overflow: 'hidden'}}
     >
-        <View style={styles.item}>
+        <View style={styles.item} >
           <Text style={isChecked ? styles.complete : styles.incomplete}>{item.name}</Text>
+          
+          <TouchableOpacity onLongPress={handleLongPress}>
+            <Text>Visualizar</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity onPress={handleVisible}>
             <Text>Remove</Text>
           </TouchableOpacity>

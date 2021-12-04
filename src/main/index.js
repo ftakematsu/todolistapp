@@ -41,7 +41,10 @@ export default class Main extends Component {
 
   buscarTodo = async (text) => {
     let user_id = this.state.userId;
-    // TODO search API
+    
+    const response = await api.get('/todo/' + user_id + "?name=" + text);
+
+    this.setState({ myTodoList: response.data });
   }
 
   addMyTodo = (text) => {

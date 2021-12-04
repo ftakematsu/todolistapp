@@ -12,6 +12,7 @@ function Search({title, searchTodo}) {
 
     const setTextHandle = (text) => {
         setText(text);
+        searchTodo(text);
     }
 
     return (
@@ -26,7 +27,7 @@ function Search({title, searchTodo}) {
             value={text}
             onChangeText={ (text) => setTextHandle(text) }
             onSubmitEditing={ handleSearch }
-        />
+            />
         </View>
       );
 }
